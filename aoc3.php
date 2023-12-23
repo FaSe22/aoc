@@ -59,14 +59,13 @@ foreach ($grid as $el) {
     array_push($neighbours, $grid->getNeighbours($symbol));
   }
 
-  $numbers = array_filter($el, function ($e) use ($grid) {
-    if (is_numeric($e->value) && !in_array($e, $grid->stable)) {
-      #echo json_encode($e);
-    }
-  });
+  #$numbers = array_filter($el, function ($e) use ($grid) {
+  #  if (is_numeric($e->value) && !in_array($e, $grid->stable)) {
+  #    #echo json_encode($e);
+  #  }
+  #});
 }
 echo json_encode($grid->stable);
-die;
 
 
 
@@ -92,12 +91,10 @@ class Grid
   }
   public function getNeighbours(Point $point)
   {
-    $neighbours = [];
     $coordinates = [new Point(1, 0), new Point(1, 1), new Point(0, 1), new Point(-1, 0), new Point(0, -1), new Point(-1, -1), new Point(1, -1), new Point(-1, 1)];
     foreach ($coordinates as $coordinate) {
       $nb = $this->getPoint(...$coordinate->add($point));
-      if ($nb && !in_array($nb, $this->stable) && !in_array($nb, $neighbours) && is_numeric($nb->value)) {
-        $neighbours[] = $nb;
+      if ($nb && !in_array($nb, $this->stable) && is_numeric($nb->value)) {
         $this->addStable($nb);
         $this->getNeighbours($nb);
       }
