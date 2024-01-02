@@ -1,7 +1,7 @@
 package aoc5
 
 func GetLocation(seeds []int) int {
-	var num = 100000000000000
+	var num = int(^uint(0) >> 1) // get max int
 	for _, seed := range seeds {
 		res := Map(seed)
 		if res < num {
@@ -25,9 +25,11 @@ func Map(seed int) int {
 	}
 
 	res := seed
+
 	for _, mapping := range mappings {
 		res = ApplyMappings(res, mapping)
 	}
+
 	return res
 
 }
