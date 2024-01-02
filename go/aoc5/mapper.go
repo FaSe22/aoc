@@ -29,32 +29,13 @@ func Map(seed int) int {
 
 	res := seed
 	for _, mapping := range mappings {
-		res = ApplyMappingsBinarySearch(res, mapping)
+		res = ApplyMappings(res, mapping)
 	}
 	return res
 
 }
 
 func ApplyMappings(input int, mappings [][]int) int {
-	for _, mapping := range mappings {
-		var source_range_start = mapping[1]
-		var r = mapping[2]
-		var source_range_end = source_range_start + r
-
-		var counter = 0
-		if input >= source_range_start && input < source_range_end {
-			for i := source_range_start; i < source_range_end; i++ {
-				if input == i {
-					return mapping[0] + counter
-				}
-				counter++
-			}
-		}
-	}
-	return input
-}
-
-func ApplyMappingsBinarySearch(input int, mappings [][]int) int {
 	for _, mapping := range mappings {
 		sourceRangeStart := mapping[1]
 		r := mapping[2]
