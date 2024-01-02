@@ -1,12 +1,9 @@
 package aoc5
 
-import "fmt"
-
 func GetLocation(seeds []int) int {
 	var num = 100000000000000
 	for _, seed := range seeds {
 		res := Map(seed)
-		fmt.Println(res)
 		if res < num {
 			num = res
 		}
