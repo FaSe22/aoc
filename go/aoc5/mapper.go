@@ -14,7 +14,7 @@ func GetLocation(seeds []int) int {
 
 func Map(seed int) int {
 
-	var mappings = [][][]int{
+	var mappings = [][]Mapping{
 		seed_2_soil,
 		soil_2_fertilizer,
 		fertilizer_2_water,
@@ -32,22 +32,28 @@ func Map(seed int) int {
 
 }
 
-func ApplyMappings(input int, mappings [][]int) int {
+func ApplyMappings(input int, mappings []Mapping) int {
 	for _, mapping := range mappings {
-		sourceRangeStart := mapping[1]
-		r := mapping[2]
+		sourceRangeStart := mapping.start
+		r := mapping.r
 		sourceRangeEnd := sourceRangeStart + r
 
 		if input >= sourceRangeStart && input < sourceRangeEnd {
 			index := input - sourceRangeStart
-			return mapping[0] + index
+			return mapping.end + index
 		}
 	}
 
 	return input
 }
 
-var seed_2_soil = [][]int{
+type Mapping struct {
+	end   int
+	start int
+	r     int
+}
+
+var seed_2_soil = []Mapping{
 	{3566547172, 3725495029, 569472267},
 	{2346761246, 1249510998, 267846697},
 	{1812605508, 937956667, 271194541},
@@ -59,7 +65,7 @@ var seed_2_soil = [][]int{
 	{1461738487, 3051712289, 350867021},
 	{2614607943, 2464757344, 323993748},
 }
-var soil_2_fertilizer = [][]int{
+var soil_2_fertilizer = []Mapping{
 	{3107230831, 2583931429, 576709409},
 	{970181981, 608291332, 1441137369},
 	{743954495, 3859046283, 158951815},
@@ -70,7 +76,7 @@ var soil_2_fertilizer = [][]int{
 	{2951167054, 4017998098, 156063777},
 	{902906310, 3160640838, 67275671},
 }
-var fertilizer_2_water = [][]int{
+var fertilizer_2_water = []Mapping{
 	{1257642402, 395703749, 69589612},
 	{1800674, 2215701547, 90550534},
 	{2757853693, 358464863, 37238886},
@@ -115,7 +121,7 @@ var fertilizer_2_water = [][]int{
 	{1071196524, 2519215745, 99869466},
 }
 
-var water_2_light = [][]int{
+var water_2_light = []Mapping{
 	{512627839, 90187036, 1196629},
 	{3379634653, 2059506154, 33434334},
 	{3286651054, 4276482087, 18485209},
@@ -162,7 +168,7 @@ var water_2_light = [][]int{
 	{3305136263, 3252395580, 35373886},
 }
 
-var light_2_temp = [][]int{
+var light_2_temp = []Mapping{
 	{1094191559, 698410082, 28110394},
 	{383870732, 1189042355, 107231661},
 	{3711052230, 2164474756, 34756304},
@@ -211,7 +217,7 @@ var light_2_temp = [][]int{
 	{2330054245, 2961782542, 110037169},
 }
 
-var humidity_2_location = [][]int{
+var humidity_2_location = []Mapping{
 	{3907319746, 3137303541, 31421983},
 	{3085093695, 1018495475, 286155292},
 	{2898003508, 2491485887, 87665522},
@@ -242,7 +248,7 @@ var humidity_2_location = [][]int{
 	{1623954693, 4059300793, 74879205},
 }
 
-var temp_2_humidity = [][]int{
+var temp_2_humidity = []Mapping{
 	{1773059646, 4122818507, 172148789},
 	{2417158855, 2859734866, 110076859},
 	{977168274, 1576624124, 28149321},
