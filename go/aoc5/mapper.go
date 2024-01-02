@@ -29,7 +29,7 @@ func Map(seed int) int {
 
 	res := seed
 	for _, mapping := range mappings {
-		res = ApplyMappings(res, mapping)
+		res = ApplyMappingsBinarySearch(res, mapping)
 	}
 	return res
 
@@ -51,6 +51,21 @@ func ApplyMappings(input int, mappings [][]int) int {
 			}
 		}
 	}
+	return input
+}
+
+func ApplyMappingsBinarySearch(input int, mappings [][]int) int {
+	for _, mapping := range mappings {
+		sourceRangeStart := mapping[1]
+		r := mapping[2]
+		sourceRangeEnd := sourceRangeStart + r
+
+		if input >= sourceRangeStart && input < sourceRangeEnd {
+			index := input - sourceRangeStart
+			return mapping[0] + index
+		}
+	}
+
 	return input
 }
 
